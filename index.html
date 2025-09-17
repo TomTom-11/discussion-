@@ -124,6 +124,13 @@
       statusAd.classList.add("completed");
       checkUnlock();
     });
+
+    // Redirection vers ton site quand unlocked
+    btnLocked.addEventListener("click", () => {
+      if (btnLocked.classList.contains("unlocked")) {
+        window.location.href = "https://tomtom-11.github.io/DISCUSSION./";
+      }
+    });
   </script>
 </body>
 </html>
