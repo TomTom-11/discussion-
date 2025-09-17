@@ -34,12 +34,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+      transition: 0.3s;
     }
 
     .green {
       background: #28a745;
       color: white;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
     }
 
     .green:hover {
@@ -54,6 +55,13 @@
       cursor: not-allowed;
     }
 
+    .unlocked {
+      background: #28a745;
+      color: white;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.9);
+      cursor: pointer;
+    }
+
     .status {
       margin-top: 30px;
       font-size: 16px;
@@ -63,18 +71,59 @@
       color: orange;
       font-weight: bold;
     }
+
+    .completed {
+      color: lightgreen;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h1>🔒 Unlock Premium Access</h1>
   
-  <button class="button green">📖 Read an Article</button>
-  <button class="button green">📺 Watch an Ad</button>
-  <button class="button locked">🔒 Locked</button>
+  <button id="btn-article" class="button green">📖 Read an Article</button>
+  <button id="btn-ad" class="button green">📺 Watch an Ad</button>
+  <button id="btn-locked" class="button locked">🔒 Locked</button>
 
   <div class="status">
-    <p>📖 Article Read: ⏳ <span class="pending">Pending</span></p>
-    <p>📺 Ad Watched: ⏳ <span class="pending">Pending</span></p>
+    <p>📖 Article Read: ⏳ <span id="status-article" class="pending">Pending</span></p>
+    <p>📺 Ad Watched: ⏳ <span id="status-ad" class="pending">Pending</span></p>
   </div>
+
+  <script>
+    let articleDone = false;
+    let adDone = false;
+
+    const btnArticle = document.getElementById("btn-article");
+    const btnAd = document.getElementById("btn-ad");
+    const btnLocked = document.getElementById("btn-locked");
+
+    const statusArticle = document.getElementById("status-article");
+    const statusAd = document.getElementById("status-ad");
+
+    function checkUnlock() {
+      if (articleDone && adDone) {
+        btnLocked.textContent = "✅ Unlocked";
+        btnLocked.classList.remove("locked");
+        btnLocked.classList.add("unlocked");
+      }
+    }
+
+    btnArticle.addEventListener("click", () => {
+      articleDone = true;
+      statusArticle.textContent = "Completed ✅";
+      statusArticle.classList.remove("pending");
+      statusArticle.classList.add("completed");
+      checkUnlock();
+    });
+
+    btnAd.addEventListener("click", () => {
+      adDone = true;
+      statusAd.textContent = "Completed ✅";
+      statusAd.classList.remove("pending");
+      statusAd.classList.add("completed");
+      checkUnlock();
+    });
+  </script>
 </body>
 </html>
